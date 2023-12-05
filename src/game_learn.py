@@ -3,9 +3,9 @@
 import sys
 import pickle
 from games.ball_game.ball_game import BallGame
-from AI_Types.AI_supervised import train_ai
-from AI_Types.AI_DQL import train_qnet
-from AI_Types.AI_evolution import train_neat
+from src.AI_Types.AI_supervised import train_ai
+from src.AI_Types.AI_DQL import train_qnet
+from src.AI_Types.AI_evolution import train_neat
 
 S_WIDTH = 800
 S_HEIGHT = 600

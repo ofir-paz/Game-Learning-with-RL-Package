@@ -10,8 +10,8 @@ import torch.nn as nn
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from games.ball_game.ball_game import BallGame
-from AI_Types.AI import AI
+from src.games.ball_game.ball_game import BallGame
+from src.AI_Types.AI import AI
 
 
 GAME_NAME = 'q-learn'

@@ -2,7 +2,7 @@
 import random
 import neat
 import pickle
-from games.ball_game.ball_game import BallGame
+from src.games.ball_game.ball_game import BallGame
 
 generation = 0
 
