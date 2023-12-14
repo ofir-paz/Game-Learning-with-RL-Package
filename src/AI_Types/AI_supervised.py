@@ -1,7 +1,7 @@
 
 import torch
 from torch.utils.data import Dataset, DataLoader
-from src.AI_Types.AI import AI
+from AI_Types.AI import AI
 
 
 def load_dataset(infos, actions, batch_size=2048):

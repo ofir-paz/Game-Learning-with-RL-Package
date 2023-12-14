@@ -10,8 +10,8 @@ import torch.nn as nn
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from src.games.ball_game.ball_game import BallGame
-from src.AI_Types.AI import AI
+from games.ball_game.ball_game import BallGame
+from AI_Types.AI import AI
 
 
 GAME_NAME = 'q-learn'
@@ -48,7 +48,7 @@ def train_qnet(screen_size, num_episodes=300, lr=1e-3, gamma=0.995,
         num_timesteps = 0
 
         game.reset_game(GAME_NAME, f'Q-Episode: {episode + 1}', game_speed=2.,
-                        show_game=True)
+                        show_game=False)
         while True:
             state, action, reward, next_state, is_done = perform_time_step(q_net, game, epsilon)
             experience = Experience(state, action, reward, next_state)

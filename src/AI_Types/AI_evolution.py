@@ -2,15 +2,13 @@
 import random
 import neat
 import pickle
-from src.games.ball_game.ball_game import BallGame
 
 generation = 0
 
 
-def train_neat(config_file, num_generations: int = 100, screen_size: tuple[int, int] = (800, 600),
-               display_game: bool = True, path_for_ai: str | None = None):
+def train_neat(config_file, game_class, num_generations: int = 100, path_for_ai: str | None = None):
     # Create the game instance
-    game = BallGame(screen_size)
+    game = game_class()
 
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
@@ -33,42 +31,43 @@ def train_neat(config_file, num_generations: int = 100, screen_size: tuple[int, 
     neat.nn.FeedForwardNetwork.predict = predict_func
 
     # Run NEAT
-    p.run(run_generation, num_generations, game=game, display_game=display_game)
+    p.run(run_generation, num_generations, game=game)
     game.kill()
 
     best_ai = neat.nn.FeedForwardNetwork.create(p.best_genome, config)
     save_ai(best_ai, path_for_ai)
 
 
-def run_generation(genomes, config, game: BallGame, display_game: bool = True):
-    reset_generation(game, genomes, config, display_any_game=display_game)
+def run_generation(genomes, config, game):
+    reset_generation(game, genomes, config)
     eval_fitness(game, genomes)
 
 
-def eval_fitness(game: BallGame, genomes):
+def eval_fitness(game, genomes):
     game.game_loop()
 
     for i, (genome_id, genome) in enumerate(genomes):
-        genome.fitness = game.fitnesses[i]
+        genome.fitness = game.fitnesses[get_name_formate(i+1)]
 
 
-def reset_generation(game: BallGame, genomes, config, display_any_game: bool = True):
+def reset_generation(game, genomes, config, display_any_game: bool = True):
     nets = []
     global generation
     generation += 1  # Increment generation counter
-    genome_to_show = random.randint(0, len(genomes)-1)
 
     for i, (genome_id, genome) in enumerate(genomes):
         net = neat.nn.FeedForwardNetwork.create(genome, config)
         nets.append(net)
         genome.fitness = 0.
 
-        show_game = i == genome_to_show and display_any_game
-        game.reset_game(i, f"Generation: {generation} Genome: {i}", game_speed=1,
-                        show_game=show_game, save_fitness=True, ai=nets[i])
+        game.reset_game(get_name_formate(genome_num=i+1), ai=nets[i])
 
 
 def save_ai(ai, path_for_ai: str | None = None):
     if path_for_ai:
         with open(path_for_ai + ".pickle", 'wb') as f:
             pickle.dump(ai, f)
+
+
+def get_name_formate(genome_num: int):
+    return f"Genome: {genome_num}"

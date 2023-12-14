@@ -3,7 +3,7 @@
 """
 
 import pygame
-from src.games.ball_game.ball_game_sprites import Player, Ball
+from games.ball_game.ball_game_sprites import Player, Ball
 
 # Define some colors.
 GREY = (128, 128, 128)

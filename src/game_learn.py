@@ -3,9 +3,9 @@
 import sys
 import pickle
 from games.ball_game.ball_game import BallGame
-from src.AI_Types.AI_supervised import train_ai
-from src.AI_Types.AI_DQL import train_qnet
-from src.AI_Types.AI_evolution import train_neat
+from AI_Types.AI_supervised import train_ai
+from AI_Types.AI_DQL import train_qnet
+from AI_Types.AI_evolution import train_neat
 
 S_WIDTH = 800
 S_HEIGHT = 600
@@ -56,12 +56,33 @@ def main():
 
 
 def save_infos_actions(infos, actions, filename):
+    """
+    Save the given infos and actions to a file using pickle.
+
+    :param infos: The infos to save.
+    :param actions: The actions to save.
+    :param filename: The name of the file to save to.
+    :return: None
+    """
     with open(filename + ".pickle", 'wb') as f:
         # Put them in the file
         pickle.dump((infos, actions), f)
 
 
 def load_infos_actions(filename):
+    """
+    Load Infos and Actions from Pickle File
+
+    This method loads the information and action data from a pickle file.
+    The pickle file should contain a tuple of two variables: infos and actions.
+
+    :param filename: The name of the pickle file to load data from. Do not include the file extension.
+    :return: A tuple containing the loaded infos and actions.
+
+    :Example:
+
+    load_infos_actions("data") -> (infos, actions)
+    """
     with open(filename + ".pickle", 'rb') as f:
         # Load the variables
         infos, actions = pickle.load(f)
